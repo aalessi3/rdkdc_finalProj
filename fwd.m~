@@ -48,7 +48,7 @@ gst = [ROT0Z,t;0 0 0 1]*[u1, u2, u3, u4]*[ROTm90X,dummy;0 0 0 1]*[ROT90Y,dummy;0
 
 
 % gst = [ROTZ(pi/2),t;0 0 0 1]*[u1, u2, u3, u4]*[ROTX(-pi/2),dummy;0 0 0 1]*[ROTY(pi/2),dummy;0 0 0 1];
-% gst = [ROT180Z,dummy;0 0 0 1]*[u1, u2, u3, u4];
+gst = [ROT180Z,dummy;0 0 0 1]*[u1, u2, u3, u4];
 end
 
 

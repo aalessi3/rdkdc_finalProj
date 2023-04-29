@@ -2,7 +2,6 @@ function mu = manipulability(J,method)
 
 [U,S,V] = svd(J);
 lamda = diag(S);
-disp(lamda)
 
 if (method == "sigmamin")
     sigma_min = min(lamda); 

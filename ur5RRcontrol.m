@@ -18,18 +18,28 @@ function error = ur5RRcontrol(gdesired, K, ur5)
         qk_1 = qk-K*T*inv(Jb)*xik;
         qk = qk_1;
 
+
+        for i = 1:6
+            if(qk(i)>pi)
+                qk(i) = qk(i) - pi;
+            end
+            if(qk(i)<-pi)
+                qk(i) = qk(i) + pi;
+            end
+        end
+
         gst = ur5FwdKin(qk);
         gtt = gdesired\gst;
         xik = getXi(gtt);
-
+        
         if(manipulability(Jb, 'invcond') < 0.01)
             disp(qk);
             error = -1;
             return
         end
-
-          pause(.05);
-          ur5.move_joints(qk, .2);
+          disp(qk);
+          pause(1);
+          ur5.move_joints(qk, 1);
     end
 
     error = norm(xik(1:3));
