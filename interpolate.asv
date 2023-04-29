@@ -1,0 +1,12 @@
+function [points] = interpolate(g_start, g_final, steps)
+    
+    p_start = g_start(1:3, 4);
+    p_final = g_final(1:3, 4);
+    
+    for i = 1:steps
+        
+
+    end
+
+
+end
