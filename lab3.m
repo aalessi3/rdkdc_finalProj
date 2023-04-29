@@ -202,9 +202,9 @@ pause(0.5)
 Frame_Test = tf_frame('base_link', 'Frame_goal',g_goal);
 
 disp("Sending Non Singulare Goal");
-ur5RRcontrol(g_goal, K, ur5)
-
-q_goal = [pi/4 pi/5 0 pi/6 pi/3 pi/9]';
-g_goal = ur5FwdKin(q_goal);
-disp("Sending Singular Goal");
-ur5RRcontrol(g_goal, K, ur5)
+% ur5RRcontrol(g_goal, K, ur5)
+ur5JTcontrol(g_goal, K, ur5)
+% q_goal = [pi/4 pi/5 0 pi/6 pi/3 pi/9]';
+% g_goal = ur5FwdKin(q_goal);
+% disp("Sending Singular Goal");
+% ur5RRcontrol(g_goal, K, ur5)

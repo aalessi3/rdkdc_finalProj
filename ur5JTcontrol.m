@@ -1,10 +1,10 @@
-function error = ur5RRcontrol(gdesired, K, ur5)
+function error = ur5JTcontrol(gdesired, K, ur5)
     
     posThresh = .005;
     rotThresh = .02618;
     T = 0.01;
     
-    qk = [pi/3 pi/3 pi/4 pi/3 pi/2 8*pi/9]'; %Move robot into non 
+    qk = [pi/3 pi/3 pi/4 pi/3 pi/2  8*pi/9]'; %Move robot into non 
     ur5.move_joints(qk, 4);
     pause(4);
     qk = ur5.get_current_joints(); %Initial joint config of robot
@@ -15,13 +15,7 @@ function error = ur5RRcontrol(gdesired, K, ur5)
     while(norm(xik(1:3)) > posThresh || norm(xik(4:6)) > rotThresh)
 
         Jb = ur5BodyJacobian(qk);
-        
-        
-        qk_1 = qk-K*T*inv(Jb)*xik;
-        disp("-----------test")
-        disp(inv(Jb)*xik)
-        disp(inv(Jb))
-        disp("-----------------")
+        qk_1 = qk-K*T*Jb'*xik;
         qk = qk_1;
 
 
