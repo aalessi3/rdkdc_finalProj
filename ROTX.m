@@ -1,4 +1,3 @@
-
 function RotationX = ROTX(q)
 %ROTX Summary of this function goes here
 %   input: radians
@@ -6,5 +5,4 @@ function RotationX = ROTX(q)
         0,cos(q),-sin(q);...
         0,sin(q),cos(q)];
 end
-
 
