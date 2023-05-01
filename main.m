@@ -30,6 +30,10 @@ if w == 1
     disp('Target location recorded')
 end
 
+disp('Moving back to home position')
+ur5.move_joints([0;0;0;0;0;0],10)
+pause(10)
+disp('At home location')
 
 
 
