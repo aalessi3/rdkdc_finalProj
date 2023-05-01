@@ -1,0 +1,24 @@
+clc; 
+clear;
+
+ur5 = ur5_interface(); 
+
+ur5.home(); 
+pause(5);
+
+disp('Moved the robot to goal loaction and then press enter')
+
+w = waitforbuttonpress;
+if w == 1
+    start_location = ur5.current_joint_states(); 
+    disp('Start location recorded')
+end
+
+disp('Move the robot to target location and then press enter')
+w = waitforbuttonpress; 
+if w == 1
+    start_location = ur5.current_joint_states(); 
+    disp('Start location recorded')
+end
+
+
