@@ -121,8 +121,8 @@ classdef ur5_interface < handle
                     joint_v(:,i) = joint_goal(:,i)-joint_goal(:,i-1);
                 end
             end
-                disp("velocity")
-                disp(joint_v)
+%                 disp("velocity")
+%                 disp(joint_v)
             if max(max(abs(joint_v)))/time_interval > pi*self.speed_limit
                 error('Velocity over speed limit, please increase time_interval');
             end

@@ -4,11 +4,9 @@ function error = ur5RRcontrol(gdesired, K, ur5)
     rotThresh = .02618;
     T = 0.01;
     
-<<<<<<< Updated upstream
+
     qk = [pi/3 pi/3 pi/4 pi/3 pi/2 8*pi/9]'; %Move robot into non 
-=======
-    qk = [pi/3 pi/3 pi/4 pi/3 pi/2 pi/9]'; %Move robot into non 
->>>>>>> Stashed changes
+
     ur5.move_joints(qk, 4);
     pause(4);
     qk = ur5.get_current_joints(); %Initial joint config of robot
@@ -22,18 +20,13 @@ function error = ur5RRcontrol(gdesired, K, ur5)
         
         
         qk_1 = qk-K*T*inv(Jb)*xik;
-<<<<<<< Updated upstream
-        disp("-----------test")
-        disp(inv(Jb)*xik)
-        disp(inv(Jb))
-        disp("-----------------")
-=======
         v = inv(Jb)*xik;
         qv = qk - qk_1;
         [val, index] = max(abs(qv));
-        disp(val)
+       
         K = (pi/2)/(abs(v(index))*T)/20;
->>>>>>> Stashed changes
+        disp(K);
+        qk_1 = qk-K*T*inv(Jb)*xik;
         qk = qk_1;
 
 
