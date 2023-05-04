@@ -1,15 +1,14 @@
-function error = ur5RRcontrol(g_start, g_goal, ur5, K)
+function error = ur5RRcontrol(q_start, q_goal, ur5, K)
     
     posThresh = .005;
     rotThresh = .02618;
     T = 0.01;
     
     disp("ur5RRcontrl : Moving to start configuration")
-    %Move to start
-    q_start = ur5InvKin_wrap(g_start); 
     ur5.move_joints(q_start, 5);
     pause(5);
     
+    g_goal = ur5FwdKin(q_goal);
     qk = ur5.get_current_joints(); %Initial joint config of robot
     gst = ur5FwdKin(qk); %Initial pose of robot
     gtt = g_goal\gst; %Intitial error Same as inv(gdesire)*gst

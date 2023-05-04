@@ -18,11 +18,13 @@ if RR
     q_goal = [pi/3 pi/5 pi/4 pi/6 pi/3 pi/7]';
     g_goal = ur5FwdKin(q_goal);
 
+    points = interp(g_start, g_final, 100);
+
     pause(0.5)
 
     Frame_Test = tf_frame('base_link', 'Frame_goal',g_goal);
 
-    ur5RRcontrol(g_start, g_goal, ur5, K)
+    ur5RRcontrol(q_start, q_goal, ur5, K)
 end
 
 if JT
