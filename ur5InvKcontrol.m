@@ -16,6 +16,7 @@ function result = ur5InvKcontrol(g_start, g_final, ur5, steps)
     for i = 1:steps
 
         q = ur5InvKin(points(:,:,i));
+        q(:,1)
 
         ur5.move_joints(q(:,1), .3);
 

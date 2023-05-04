@@ -41,8 +41,13 @@ L1*cos(T2)+L2*cos(T2+T3)+L4*cos(T2+T3+T4)+L5*sin(T2+T3+T4)*sin(T5);...
 
 t = [0;0;89.2/1000];
  dummy = [0;0;0];
+gripper = [1 0 0 0;...
+           0  1 0 -49/1000;...
+           0 0 1 122.28/1000;...
+           0 0 0 1];    %not used now 
 gst = [ROTZ(0),t;0 0 0 1]*[u1, u2, u3, u4]*[ROTX(-pi/2),dummy;0 0 0 1]*[ROTY(pi/2),dummy;0 0 0 1];
 % gst = [ROTZ(pi),dummy;0 0 0 1]*[u1, u2, u3, u4];
 % gst = [u1, u2, u3, u4];
+
 end
 

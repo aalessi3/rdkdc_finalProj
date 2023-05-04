@@ -30,6 +30,33 @@ function error = ur5JTcontrol(g_start, g_goal, ur5, K)
         K = (pi/2)/(abs(v(index))*T)/50; %TODO Fix me for oscillations
 
         qk_1 = qk-K*T*Jb'*xik;
+        gk_1 = ur5FwdKin(qk_1);
+
+        q_cur = ur5.get_current_joints();
+        g_cur = ur5FwdKin(q_cur);
+
+        gk = ur5FwdKin(qk);
+        
+        disp("Step Dist")
+        norm(gk(1:3,4) - gk_1(1:3, 4))
+
+        disp("Goal Dist")
+        norm(gk(1:3,4) - g_goal(1:3,4))
+% 
+%         norm(g_cur(1:3,4) - gk_1(1:3, 4)) > norm(g_cur(1:3,4) - g_goal(1:3,4))
+        theta = acos(sum(diag(g_goal)));
+
+        while(norm(gk(1:3,4) - gk_1(1:3, 4)) > norm(gk(1:3,4) - g_goal(1:3,4)))
+            
+            disp("Here")
+            K = K/2;
+            qk_1 = qk-K*T*Jb'*xik;
+            gk_1 = ur5FwdKin(qk_1);
+            
+            q_cur = ur5.get_current_joints();
+            g_cur = ur5FwdKin(q_cur);
+        end
+
 
         qk = qk_1;
 
