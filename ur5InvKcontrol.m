@@ -1,8 +1,10 @@
-function result = ur5InvKcontrol(g_start, g_final, ur5, steps)
+function result = ur5InvKcontrol(q_start, q_goal, ur5, steps)
     
-    q_start = ur5InvKin(g_start);
+%     q_start = ur5InvKin(g_start);
+
+    g_goal = ur5FwdKin(q_goal);
        
-    points = interp(g_start, g_final, steps);
+    points = interp(g_start, g_goal, steps);
     
     disp("ur5InvKcontrl : Moving to start")
 
@@ -16,12 +18,14 @@ function result = ur5InvKcontrol(g_start, g_final, ur5, steps)
     for i = 1:steps
 
         q = ur5InvKin(points(:,:,i));
-        q(:,1)
+%         result = optimalJointConfig(ur5, q);
 
         ur5.move_joints(q(:,1), .3);
 
         pause(.3);
     end
+
+    result = 1;
 end
 
 

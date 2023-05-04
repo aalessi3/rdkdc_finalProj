@@ -13,9 +13,7 @@ else
     disp('At home location')
 end
 
-
-
-disp('Moved the robot to goal loaction and then press enter')
+disp('Moved the robot to start loaction and then press enter')
 
 w = waitforbuttonpress;
 if w == 1
@@ -54,6 +52,20 @@ start_location3 = target_location2;
 target_location3 = target_location;
 target_location3(1,4) = points(3,3); 
 target_location3(2,4) = points(3,4); 
+
+
+%---------------- Traj A using InvKin ----------------
+
+
+
+
+%----------------Traj A using RR control---------------
+
+
+
+
+%---------------Generate traj B --------------- using start_location 1 =
+%target Location 1
 
 
 

@@ -63,7 +63,7 @@ classdef ur5_interface < handle
             self.joint_speed_pub = rospublisher('/ur_driver/URScript','std_msgs/String');
             self.tool_pub = rospublisher('/ur_driver/URScript','std_msgs/String');
             self.tftree = rostf;
-            %self.collision_check_client = rossvcclient('/check_state_validity');
+%             self.collision_check_client = rossvcclient('/check_state_validity');
             self.current_joint_states = receive(self.current_joint_states_sub);
                         
         end
