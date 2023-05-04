@@ -2,8 +2,8 @@
 ur5 = ur5_interface();
 
 INV = false;
-RR = true;
-JT = false;
+RR = false;
+JT = true;
 
 
 if RR
@@ -18,7 +18,7 @@ if RR
     q_goal = [pi/3 pi/5 pi/4 pi/6 pi/3 pi/7]';
     g_goal = ur5FwdKin(q_goal);
 
-    points = interp(g_start, g_final, 100);
+%     points = interp(q_start, q_goal, 100);
 
     pause(0.5)
 
@@ -33,17 +33,17 @@ if JT
     
     K = 1;
 
-    q_start = [pi/3 pi/3 pi/2 pi/4 pi/7 pi/9]';
+    q_start = [pi/4 pi/3 pi/5 pi/4 -pi/7 pi/9]';
     g_start = ur5FwdKin(q_start);
 
-    q_goal = [pi/3 pi/5 pi/4 pi/6 pi/3 pi/7]';
+    q_goal = [pi/3 pi/5 pi/4 pi/6 pi/8 pi/7]';
     g_goal = ur5FwdKin(q_goal);
 
     pause(0.5)
 
     Frame_Test = tf_frame('base_link', 'Frame_goal',g_goal);
 
-    ur5JTcontrol(g_start, g_goal, ur5, K)
+    ur5JTcontrol(q_start, q_goal, ur5, K)
 
 end
 

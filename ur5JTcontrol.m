@@ -25,18 +25,18 @@ function error = ur5JTcontrol(q_start, q_goal, ur5, K)
 
     while(norm(xik(1:3)) > posThresh || norm(xik(4:6)) > rotThresh)
 
-        
-
         Jb = ur5BodyJacobian(qk);
     
         v = Jb'*xik;
 
-        qv = K*T*Jb'*xik
+        qv = K*T*Jb'*xik;
 
         [val, index] = max(abs(qv));
 
         K = (pi/2)/(abs(v(index))*T)/50; %TODO Fix me for oscillations
-
+%         disp(K)
+        K = min(40,K);
+        
         qk_1 = qk-K*T*Jb'*xik;
 
         gk_1 = ur5FwdKin(qk_1);
@@ -54,14 +54,16 @@ function error = ur5JTcontrol(q_start, q_goal, ur5, K)
 
         xik = getXi(gtt);
         
-        if(manipulability(Jb, 'invcond') < 0.01)
-            disp(qk);
+        if(manipulability(Jb, 'invcond') < 0.0001)
+            disp("singularity");
+            disp(qk/pi);
             error = -1;
             return
         end
 
-          pause(0.2);
-          ur5.move_joints(qk, 0.2);
+          pause(0.03);
+          ur5.move_joints(qk, 0.03);
+          
     end
 
     error = norm(xik(1:3));

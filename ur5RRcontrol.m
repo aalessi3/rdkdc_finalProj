@@ -27,7 +27,8 @@ function error = ur5RRcontrol(q_start, q_goal, ur5, K)
         [val, index] = max(abs(qv));
        
         K = (pi/2)/(abs(v(index))*T)/50; %Obtain max k : TODO find better solution
-
+        K = min(50, K);
+        disp(K);
         qk_1 = qk-K*T*inv(Jb)*xik;
 
         qk = qk_1;
@@ -38,14 +39,14 @@ function error = ur5RRcontrol(q_start, q_goal, ur5, K)
 
         xik = getXi(gtt);
         
-        if(manipulability(Jb, 'invcond') < 0.01)
+        if(manipulability(Jb, 'invcond') < 0.001)
             disp(qk);
             error = -1;
             return
         end
 
-          pause(0.2);
-          ur5.move_joints(qk, 0.2);
+          pause(0.1);
+          ur5.move_joints(qk, 0.1);
     end
 
     error = norm(xik(1:3));
