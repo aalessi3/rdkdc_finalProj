@@ -40,7 +40,20 @@ t = [target_location(1,4), target_location(2,4)];
 
 points = intermediatePoints(s,t);
 
+start_location1 = start_location;
+target_location1 = start_location;
+target_location1(1,4) = points(1,3); 
+target_location1(2,4) = points(1,4); 
 
+start_location2 = target_location1; 
+target_location2 = target_location;
+target_location2(1,4) = points(2,3); 
+target_location2(2,4) = points(2,4); 
+
+start_location3 = target_location2;
+target_location3 = target_location;
+target_location3(1,4) = points(3,3); 
+target_location3(2,4) = points(3,4); 
 
 
 
