@@ -7,7 +7,7 @@ function [solution, qtt, r] = optimalJointConfig(ur5, qtt_array)
 [~, n_col] = size(qtt_array);
 
 min_norm = 1000; 
-q = ur5.current_joint_states(); 
+q = ur5.get_current_joints(); 
 qtt = []; 
 solution = 0;
 
