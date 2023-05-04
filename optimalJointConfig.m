@@ -1,4 +1,4 @@
-function [solution, qtt] = optimalJointConfig(ur5, qtt_array)
+function [solution, qtt, r] = optimalJointConfig(ur5, qtt_array)
 %% Outputs  
 % optimum joint configuration for time t+1 
 %% Inputs 
@@ -12,16 +12,13 @@ qtt = [];
 solution = 0;
 
 for i = 1:n_col
-    qtt_array(:,i)
-    if (ur5.check_collision(qtt_array(:,i)))
-        norm_ = norm(q - qtt_array(:,i)); 
-        if (norm_ < min_norm) 
-            min_norm = norm_; 
-            qtt = qtt_array(:,i);
-            solution = 1; 
-        end
+    norm_ = norm(q - qtt_array(:,i)); 
+    if (norm_ < min_norm) 
+        min_norm = norm_; 
+        qtt = qtt_array(:,i);
+        solution = 1; 
+        r = i; 
     end
-
 end
 
 
