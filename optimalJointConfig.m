@@ -12,6 +12,7 @@ qtt = [];
 solution = 0;
 
 for i = 1:n_col
+    qtt_array(:,i)
     if (ur5.check_collision(qtt_array(:,i)))
         norm_ = norm(q - qtt_array(:,i)); 
         if (norm_ < min_norm) 

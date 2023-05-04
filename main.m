@@ -35,6 +35,11 @@ ur5.move_joints([0;0;0;0;0;0],10)
 pause(10)
 disp('At home location')
 
+s = [start_location(1,4), start_location(2,4)];
+t = [target_location(1,4), target_location(2,4)];
+
+points = intermediatePoints(s,t);
+
 
 
 
