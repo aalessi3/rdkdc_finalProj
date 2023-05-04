@@ -2,8 +2,8 @@
 ur5 = ur5_interface();
 
 INV = false;
-RR = false;
-JT = true;
+RR = true;
+JT = false;
 
 
 if RR
@@ -13,7 +13,7 @@ if RR
     K = 1;
 
     q_start = [pi/3 pi/3 pi/2 pi/4 pi/7 pi/9]';
-    g_start = ur5FwdKinz(q_start);
+    g_start = ur5FwdKin(q_start);
 
     q_goal = [pi/3 pi/5 pi/4 pi/6 pi/3 pi/7]';
     g_goal = ur5FwdKin(q_goal);
