@@ -12,13 +12,13 @@ function error = ur5RRcontrol(q_start, q_goal, ur5, K)
     g_start = ur5FwdKin(q_start);
     g_goal = ur5FwdKin(q_goal);
 
-    points = interp(g_start, g_goal, steps);
+%     points = interp(g_start, g_goal, steps);
 
     
-    for i = 1:steps
+%     for i = 1:steps
 
-        g_goal = points(:,:,i);
-        i
+%         g_goal = points(:,:,i);
+%         i
         qk = ur5.get_current_joints(); %Initial joint config of robot
         gst = ur5FwdKin(qk); %Initial pose of robot
         gtt = g_goal\gst; %Intitial error Same as inv(gdesire)*gst
@@ -48,7 +48,7 @@ function error = ur5RRcontrol(q_start, q_goal, ur5, K)
     
             xik = getXi(gtt);
             
-            if(manipulability(Jb, 'invcond') < 0.001)
+            if(manipulability(Jb, 'invcond') < 0.01)
                 disp(qk);
                 error = -1;
                 return
@@ -58,9 +58,9 @@ function error = ur5RRcontrol(q_start, q_goal, ur5, K)
               ur5.move_joints(qk, 0.5);
         end
     
-        error = norm(xik(1:3));
+%         error = norm(xik(1:3));
     
-    end
+%     end
 
     error = 1;
 

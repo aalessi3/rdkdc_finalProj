@@ -138,7 +138,7 @@ if(JT)
     
     disp("Drawing Line Segment 1");
     
-    while(ur5JTcontrol(q_start_1, q_goal_1, ur5, 1) ~= 1)
+    while(ur5JTcontrol(q_start_1, q_goal_3, ur5, 1) ~= 1)
     
         disp("Moving")
     

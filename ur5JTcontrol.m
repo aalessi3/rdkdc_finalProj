@@ -1,9 +1,9 @@
 function error = ur5RRcontrol(q_start, q_goal, ur5, K)
     
-    posThresh = .005;
+    posThresh = .01;
     rotThresh = .02618;
-    T = 0.01;
-    steps = 5;
+    T = 0.07;
+    steps = 20;
     
     disp("ur5RRcontrl : Moving to start configuration")
     ur5.move_joints(q_start, 5);
@@ -14,6 +14,7 @@ function error = ur5RRcontrol(q_start, q_goal, ur5, K)
 
     points = interp(g_start, g_goal, steps);
 
+    
     for i = 1:steps
 
         g_goal = points(:,:,i);
@@ -47,14 +48,14 @@ function error = ur5RRcontrol(q_start, q_goal, ur5, K)
     
             xik = getXi(gtt);
             
-            if(manipulability(Jb, 'invcond') < 0.001)
+            if(manipulability(Jb, 'invcond') < 0.01)
                 disp(qk);
                 error = -1;
                 return
             end
     
-              pause(0.25);
-              ur5.move_joints(qk, 0.25);
+              pause(0.1);
+              ur5.move_joints(qk, 0.1);
         end
     
         error = norm(xik(1:3));
