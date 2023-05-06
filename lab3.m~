@@ -1,9 +1,9 @@
 
 ur5 = ur5_interface();
 
-INV = false;
+INV = true;
 RR = false;
-JT = true;
+JT = false;
 
 
 if RR
