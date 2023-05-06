@@ -3,11 +3,11 @@ function gst = ur5FwdKin(theta)
 % the base twists, gst0, etc) should be defined inside the function.
 
 T1 = theta(1);
-T2 = theta(2);
-% T2 = theta(2) + pi/2;
+% T2 = theta(2);
+T2 = theta(2) + pi/2;
 T3 = theta(3);
-% T4 = theta(4) + pi/2;
-T4 = theta(4);
+T4 = theta(4) + pi/2;
+% T4 = theta(4);
 T5 = theta(5);
 T6 = theta(6);
 
@@ -45,7 +45,7 @@ gripper = [1 0 0 0;...
            0  1 0 -49/1000;...
            0 0 1 122.28/1000;...
            0 0 0 1];    %not used now 
-gst = [ROTZ(0),t;0 0 0 1]*[u1, u2, u3, u4]*[ROTX(-pi/2),dummy;0 0 0 1]*[ROTY(pi/2),dummy;0 0 0 1];
+gst = [ROTZ(pi/2),t;0 0 0 1]*[u1, u2, u3, u4]*[ROTX(-pi/2),dummy;0 0 0 1]*[ROTY(pi/2),dummy;0 0 0 1]*gripper;
 % gst = [ROTZ(pi),dummy;0 0 0 1]*[u1, u2, u3, u4];
 % gst = [u1, u2, u3, u4];
 

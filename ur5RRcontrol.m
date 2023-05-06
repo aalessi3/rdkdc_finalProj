@@ -14,6 +14,8 @@ function error = ur5RRcontrol(q_start, q_goal, ur5, K)
 
     points = interp(g_start, g_goal, steps);
 
+    
+    333333333333333333333333333333333333333333333333 mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm5
     for i = 1:size(points)
 
         g_goal = points(:,:,i);

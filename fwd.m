@@ -3,9 +3,9 @@ function gst = fwd(theta,L)
 % the base twists, gst0, etc) should be defined inside the function.
 
 T1 = theta(1);
-T2 = theta(2);
+T2 = theta(2)+ pi/2;
 T3 = theta(3);
-T4 = theta(4);
+T4 = theta(4)+ pi/2;
 T5 = theta(5);
 T6 = theta(6);
 
@@ -15,7 +15,9 @@ L2 = L(2);
 L3 = L(3);
 L4 = L(4);
 L5 = L(5);
-L6 = L(6);
+L6 = L(6);   %89.2/1000
+L7 = L(7);
+L8 = L(8);
 
 u1 = [cos(T1)*cos(T5)-cos(T2+T3+T4)*sin(T1)*sin(T5);...
 cos(T5)*sin(T1)+cos(T1)*cos(T2+T3+T4)*sin(T5);...
@@ -40,11 +42,16 @@ L1*cos(T2)+L2*cos(T2+T3)+L4*cos(T2+T3+T4)+L5*sin(T2+T3+T4)*sin(T5);...
 t = [0;0;L6];
 dummy = [0;0;0];
 
-ROT0Z = [1 0 0 ;0 1 0; 0 0 1];
+ROT90Z = [0 -1 0 ;1 0 0; 0 0 1];
 ROTm90X = [1 0 0; 0 0 1; 0 -1 0];
 ROT90Y = [0 0 1; 0 1 0 ;-1 0 0];
 
-gst = [ROT0Z,t;0 0 0 1]*[u1, u2, u3, u4]*[ROTm90X,dummy;0 0 0 1]*[ROT90Y,dummy;0 0 0 1];
+gripper = [1 0 0 0;...
+           0  1 0 L7;...
+           0 0 1 L8;...
+           0 0 0 1];    %not used now 
+       
+gst = [ROT90Z,t;0 0 0 1]*[u1, u2, u3, u4]*[ROTm90X,dummy;0 0 0 1]*[ROT90Y,dummy;0 0 0 1]*gripper;
 
 
 % gst = [ROTZ(pi/2),t;0 0 0 1]*[u1, u2, u3, u4]*[ROTX(-pi/2),dummy;0 0 0 1]*[ROTY(pi/2),dummy;0 0 0 1];

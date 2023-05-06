@@ -11,7 +11,7 @@ else
     disp('Moving to home loaction...')
     ur5.move_joints([0;0;0;0;0;0],10)
     pause(10)
-    disp('At home location')
+    disp('At home location')+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 end
 
 disp('Moved the robot to start loaction and then press enter')

@@ -1,6 +1,6 @@
 %test ur5fwdkin
 theta = sym('theta',[6 1]);
-L = sym('L',[6 1]);
+L = sym('L',[8 1]);
 base = [pi/4 0 -pi/3 0 -pi/3 0 ]';
 
 Test = simplify(fwd(theta,L));
