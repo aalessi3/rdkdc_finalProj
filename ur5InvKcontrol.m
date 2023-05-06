@@ -1,6 +1,6 @@
 function result = ur5InvKcontrol(q_start, q_goal, ur5, steps)
     
-    time = 0.1;
+    time = 1;
 %     q_start = ur5InvKin(g_start);
 
     g_goal = ur5FwdKin(q_goal);
