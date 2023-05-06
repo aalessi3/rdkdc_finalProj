@@ -72,48 +72,101 @@ q_goal_3 = target_q;
 
 INV = false;
 RR = false;
-JT = false;
+JT = true;
 %---------------- Traj A using InvKin ----------------
 % 
-disp("Entering Control Loop for InvKin Control : Traj A")
+if INV
+    disp("Entering Control Loop for InvKin Control : Traj A")
 
-disp("Drawing Line Segment 1");
+    disp("Drawing Line Segment 1");
 
-while(ur5InvKcontrol(q_start_1, q_goal_1, ur5, steps) ~= 1)
+    while(ur5InvKcontrol(q_start_1, q_goal_1, ur5, steps) ~= 1)
 
-    ur5.get_current_joints()
+        ur5.get_current_joints()
 
+    end
+
+    disp("Drawing Line Segement 2");
+
+    while(ur5InvKcontrol(q_start_2, q_goal_2, ur5, steps) ~= 1)
+
+        ur5.get_current_joints()
+
+    end
+
+    disp("Drawing Line Segement 3");
+
+    while(ur5InvKcontrol(q_start_3, q_goal_3, ur5, steps) ~= 1)
+
+        ur5.get_current_joints()
+
+    end
+    pause(2)
+    disp('Moving back to home position')
+    ur5.move_joints([0;-1.57;0;-1.57;0;0],5);
+    pause(5)
+    disp('At home location')
+    
 end
-
-disp("Drawing Line Segement 2");
-
-while(ur5InvKcontrol(q_start_2, q_goal_2, ur5, steps) ~= 1)
-
-    ur5.get_current_joints()
-
-end
-
-disp("Drawing Line Segement 3");
-
-while(ur5InvKcontrol(q_start_3, q_goal_3, ur5, steps) ~= 1)
-
-    ur5.get_current_joints()
-
-end
-
-disp('Moving back to home position')
-ur5.move_joints([0;-1.57;0;-1.57;0;0],5);
-pause(5)
-disp('At home location')
 
 
 %----------------Traj A using RR control---------------
 
-
+if RR
+    
+     disp("Entering Control Loop for RR Control : Traj A")
+    
+    disp("Drawing Line Segment 1");
+    
+    while(ur5RRcontrol(q_start_1, q_goal_1, ur5, 1) ~= 1)
+    
+        disp("Moving")
+    
+    end
+    
+    disp("Drawing Line Segement 2");
+    
+    while(ur5RRcontrol(q_start_2, q_goal_2, ur5, 1) ~= 1)
+    
+        disp("Moving")
+    end
+    
+    disp("Drawing Line Segement 3");
+    
+    while(ur5RRcontrol(q_start_3, q_goal_3, ur5, 1) ~= 1)
+    
+        disp("Moving")
+    
+    end
+    
+    pause(2)
+    disp('Moving back to home position')
+    ur5.move_joints([0;-1.57;0;-1.57;0;0],5);
+    pause(5)
+    disp('At home location')
+    
+end
 
 
 %---------------Generate traj B --------------- using start_location 1 =
 %target Location 1
 
-
+if(JT)
+ disp("Entering Control Loop for JT Control : Traj B")
+    
+    disp("Drawing Line Segment 1");
+    
+    while(ur5JTcontrol(q_start_1, q_goal_3, ur5, 1) ~= 1)
+    
+        disp("Moving")
+    
+    end
+    
+    pause(2)
+    disp('Moving back to home position')
+    ur5.move_joints([0;-1.57;0;-1.57;0;0],5);
+    pause(5)
+    disp('At home location')
+    
+end
 

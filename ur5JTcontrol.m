@@ -14,7 +14,7 @@ function error = ur5RRcontrol(q_start, q_goal, ur5, K)
 
     points = interp(g_start, g_goal, steps);
 
-    for i = 1:size(points)
+    for i = 1:steps
 
         g_goal = points(:,:,i);
         i
@@ -53,8 +53,8 @@ function error = ur5RRcontrol(q_start, q_goal, ur5, K)
                 return
             end
     
-              pause(0.1);
-              ur5.move_joints(qk, 0.1);
+              pause(0.25);
+              ur5.move_joints(qk, 0.25);
         end
     
         error = norm(xik(1:3));
