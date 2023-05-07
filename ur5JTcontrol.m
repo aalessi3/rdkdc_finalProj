@@ -1,11 +1,11 @@
-function error = ur5RRcontrol(q_start, q_goal, ur5, K)
+function error = ur5JTcontrol(q_start, q_goal, ur5, K)
     
     posThresh = .01;
     rotThresh = .02618;
-    T = 0.07;
+    T = 0.007;
     steps = 20;
     
-    disp("ur5RRcontrl : Moving to start configuration")
+    disp("ur5JTcontrl : Moving to start configuration")
     ur5.move_joints(q_start, 5);
     pause(5);
     
@@ -18,13 +18,13 @@ function error = ur5RRcontrol(q_start, q_goal, ur5, K)
     for i = 1:steps
 
         g_goal = points(:,:,i);
-        i
+%         i
         qk = ur5.get_current_joints(); %Initial joint config of robot
         gst = ur5FwdKin(qk); %Initial pose of robot
         gtt = g_goal\gst; %Intitial error Same as inv(gdesire)*gst
         xik = getXi(gtt);
     
-        disp("ur5RRControl : Entering Control Loop")
+        disp("ur5JTControl : Entering Control Loop")
     
         while(norm(xik(1:3)) > posThresh || norm(xik(4:6)) > rotThresh)
     
@@ -54,8 +54,8 @@ function error = ur5RRcontrol(q_start, q_goal, ur5, K)
                 return
             end
     
-              pause(0.1);
-              ur5.move_joints(qk, 0.1);
+              pause(0.01);
+              ur5.move_joints(qk, 0.01);
         end
     
         error = norm(xik(1:3));

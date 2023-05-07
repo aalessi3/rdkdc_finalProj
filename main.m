@@ -70,9 +70,9 @@ q_start_1 = start_q;
 [result, q_goal_2, ind] = optimalJointConfig(ur5, ur5InvKin_wrap(target_location2));
 q_goal_3 = target_q;
 
-INV = false;
+INV = true;
 RR = false;
-JT = true;
+JT = false;
 %---------------- Traj A using InvKin ----------------
 % 
 if INV

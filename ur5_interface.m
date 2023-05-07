@@ -131,7 +131,8 @@ classdef ur5_interface < handle
             for i=1:size(joint_goal,2)
                 trajectory_point = rosmessage('trajectory_msgs/JointTrajectoryPoint');
                 trajectory_point.Velocities = zeros(6,1);
-                
+            
+                       
                 trajectory_point.Positions = joint_goal(:,i);
                 trajectory_point.TimeFromStart = rosduration(time_interval*i);
                 trajectory_goal.Points(i+1) = trajectory_point;
