@@ -3,7 +3,8 @@
 %2. click the empty figure, then draw on the new figure
 %3. when done drawing, press enter
 
-clc;
+clc;%step:
+
 clear;
 global ur5
 global skip
@@ -74,6 +75,7 @@ function end_drag(~, ~)
     global mouse_down;
     global points;
     mouse_down = false;
+    % plot(points(:, 1), points(:, 2), 'b-');
 end
 
 % Define the function that checks if the "Enter" key is pressed
@@ -86,7 +88,8 @@ function check_key(~, event)
         points(:,1) = points(:,1) - points(1,1);
         points(:,2) = points(:,2) - points(1,2);
         plot(points(:, 1), points(:, 2), 'b-');
-        disp("Drawing");  
+        disp("Drawing");
+  %     disp(points);  
         vecDraw(q_start, points, ur5);
     end
     
