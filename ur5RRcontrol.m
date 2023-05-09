@@ -1,68 +1,58 @@
 function error = ur5RRcontrol(q_start, q_goal, ur5, K)
     
+    %Function Hyper Parameters
     posThresh = .005;
     rotThresh = .02618;
     T = 0.01;
-    steps = 5;
     
+    %Move to start configuration
     disp("ur5RRcontrl : Moving to start configuration")
     ur5.move_joints(q_start, 5);
     pause(5);
     
-    g_start = ur5FwdKin(q_start);
+    %Obtain Goal Pose and Initial Error
     g_goal = ur5FwdKin(q_goal);
-
-%     points = interp(g_start, g_goal, steps);
-
+    qk = ur5.get_current_joints();
+    gst = ur5FwdKin(qk);
+    gtt = g_goal\gst; 
+    xik = getXi(gtt);
     
-%     for i = 1:steps
+    %Resolved Rate Control Loop
+    disp("ur5RRControl : Entering Control Loop")
+    while(norm(xik(1:3)) > posThresh || norm(xik(4:6)) > rotThresh)
 
-%         g_goal = points(:,:,i);
-%         i
-        qk = ur5.get_current_joints(); %Initial joint config of robot
-        gst = ur5FwdKin(qk); %Initial pose of robot
-        gtt = g_goal\gst; %Intitial error Same as inv(gdesire)*gst
+        Jb = ur5BodyJacobian(qk);
+
+        %Dynamically determine K such that max joint velocity is a constant
+        v = inv(Jb)*xik;
+        qv = K*T*inv(Jb)*xik;
+        [val, index] = max(abs(qv));
+        K = (pi/2)/(abs(v(index))*T)/50;
+        K = min(50, K);
+
+        %Update Step
+        qk_1 = qk-K*T*inv(Jb)*xik;
+        qk = qk_1;
+        
+        %Obtain New Error
+        gst = ur5FwdKin(qk);
+        gtt = g_goal\gst;
         xik = getXi(gtt);
-    
-        disp("ur5RRControl : Entering Control Loop")
-    
-        while(norm(xik(1:3)) > posThresh || norm(xik(4:6)) > rotThresh)
-    
-            Jb = ur5BodyJacobian(qk);
-    
-            v = inv(Jb)*xik;
-    
-            qv = K*T*inv(Jb)*xik;
-    
-            [val, index] = max(abs(qv));
-           
-            K = (pi/2)/(abs(v(index))*T)/50; %Obtain max k : TODO find better solution
-            K = min(50, K);
-            qk_1 = qk-K*T*inv(Jb)*xik;
-    
-            qk = qk_1;
-    
-            gst = ur5FwdKin(qk);
-    
-            gtt = g_goal\gst;
-    
-            xik = getXi(gtt);
-            
-            if(manipulability(Jb, 'invcond') < 0.01)
-                disp(qk);
-                error = -1;
-                return
-            end
-    
-              pause(0.5);
-              ur5.move_joints(qk, 0.5);
+        
+        %Check new pose for singularity
+        if(manipulability(Jb, 'invcond') < 0.01)
+            disp(qk);
+            error = -1;
+            return
         end
-    
-%         error = norm(xik(1:3));
-    
-%     end
 
-    error = 1;
+        %Move to new position
+        ur5.move_joints(qk, 0.5);
+        pause(0.5);
+    end
+
+    %Return Final error
+    error = norm(xik(1:3));
 
 end
 
