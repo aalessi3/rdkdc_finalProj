@@ -14,7 +14,6 @@ if w == 0
     q_start = ur5.get_current_joints();
     disp('Start location recorded')
     disp(q_start);
-
 end
 
 % Create a plot
@@ -96,8 +95,6 @@ function check_key(~, event)
     end
     
 end
-
-
 % 
 % end
 
