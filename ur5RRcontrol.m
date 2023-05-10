@@ -1,5 +1,12 @@
 function error = ur5RRcontrol(q_start, q_goal, ur5, K)
-    
+%% Outputs 
+% error : final position error at end of control loop
+%% Inputs
+% q_start : Stating joint configuration
+% Q_goal : Target goal configuration
+% ur5 : ur5_interface() object
+% K : Intial gain value
+
     %Function Hyper Parameters
     posThresh = .005;
     rotThresh = .02618;
@@ -16,6 +23,24 @@ function error = ur5RRcontrol(q_start, q_goal, ur5, K)
     gst = ur5FwdKin(qk);
     gtt = g_goal\gst; 
     xik = getXi(gtt);
+    
+
+    %Cal and display error in starting position
+    g_start = ur5FwdKin(q_start);
+    q_start_m = ur5.get_current_joints();
+    g_start_m = ur5FwdKin(q_start_m);
+
+    gtt_start = g_start\g_start_m;
+    xik_start = getXi(gtt_start);
+    error_start = norm(xik_start(1:3));
+
+    error_rot_start = sqrt(sum(diag((g_start_m(1:3,1:3) - g_start(1:3,1:3))*((g_start_m(1:3,1:3) - g_goal(1:3,1:3))'))));
+
+    disp("Start Error Rot ");
+    disp(error_rot_start);
+
+    disp("Start Error Pos ");
+    disp(error_start);
     
     %Resolved Rate Control Loop
     disp("ur5RRControl : Entering Control Loop")
@@ -51,8 +76,14 @@ function error = ur5RRcontrol(q_start, q_goal, ur5, K)
         pause(0.5);
     end
 
-    %Return Final error
+    %Calculate and display Final error
     error = norm(xik(1:3));
+    error_rot = sqrt(sum(diag((gst(1:3,1:3) - g_goal(1:3,1:3))*((gst(1:3,1:3) - g_goal(1:3,1:3))'))));
+    disp("Target Error Rot ");
+    disp(error_rot);
+
+    disp("Target Error Pos ");
+    disp(error);
 
 end
 

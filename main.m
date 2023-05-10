@@ -1,3 +1,7 @@
+%Used for testing controllers on UR5 in Wyamn 170. INV, RR, JT flags can be
+%changed to change controller. ur5_project.m is a better workflow with the
+%same functionality
+
 clc; 
 clear;
 steps = 10;
@@ -81,27 +85,12 @@ if INV
     disp("Drawing Line Segment 1");
     [result1, error1] = ur5InvKcontrol(q_start_1, q_goal_1, ur5, steps);
 
-    while( result1 ~= 1)
-
-        ur5.get_current_joints()
-
-    end
-
     disp("Drawing Line Segement 2");
     [result2, error2] = ur5InvKcontrol(q_start_2, q_goal_2, ur5, steps);
-    while( result2 ~= 1 )
-
-        ur5.get_current_joints()
-
-    end
 
     disp("Drawing Line Segement 3");
     [result3, error3] = ur5InvKcontrol(q_start_3, q_goal_3, ur5, steps);
-    while( result3 ~= 1)
 
-        ur5.get_current_joints()
-
-    end
     pause(2)
     disp('Moving back to home position')
     ur5.move_joints([0;-1.57;0;-1.57;0;0],5);
@@ -118,28 +107,18 @@ if RR
      disp("Entering Control Loop for RR Control : Traj A")
     
     disp("Drawing Line Segment 1");
+
+    ur5RRcontrol(q_start_1, q_goal_1, ur5, 1)
     
-    while(ur5RRcontrol(q_start_1, q_goal_1, ur5, 1)  > 0.005)
-    
-        disp("Moving")
-    
-    end
     
     disp("Drawing Line Segement 2");
-    
-    while(ur5RRcontrol(q_start_2, q_goal_2, ur5, 1)  > 0.005)
-    
-        disp("Moving")
-    end
+
+    ur5RRcontrol(q_start_2, q_goal_2, ur5, 1)
     
     disp("Drawing Line Segement 3");
-    
-    while(ur5RRcontrol(q_start_3, q_goal_3, ur5, 1)  > 0.005)
-    
-        disp("Moving")
-    
-    end
-    
+
+    ur5RRcontrol(q_start_3, q_goal_3, ur5, 1)
+
     pause(2)
     disp('Moving back to home position')
     ur5.move_joints([0;-1.57;0;-1.57;0;0],5);
@@ -156,13 +135,9 @@ if(JT)
  disp("Entering Control Loop for JT Control : Traj B")
     
     disp("Drawing Line Segment 1");
-    
-    while(ur5JTcontrol(q_start_1, q_goal_3, ur5, 1) > 0.01)
-    
-        disp("Moving")
-    
-    end
-    
+
+    ur5JTcontrol(q_start_1, q_goal_3, ur5, 1)
+        
     pause(2)
     disp('Moving back to home position')
     ur5.move_joints([0;-1.57;0;-1.57;0;0],5);
