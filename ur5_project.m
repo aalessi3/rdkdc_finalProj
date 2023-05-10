@@ -5,14 +5,15 @@ clear;
 ur5 = ur5_interface(); 
 
 % Getting the controllering type from user. 
-disp("1. RR: Resolve Rate Controller")
-disp("2. InvK: Inverse Kinematic Controller")
-disp("3. JT: Jacobian Transpose Controller")
+disp("1. RR-based: Resolve Rate Controller")
+disp("2. IK-Based: Inverse Kinematic Controller")
+disp("3. TJ-Based-: Jacobian Transpose Controller")
 prompt = "Enter the Controller type: ";
 c = input(prompt,"s");
 
 % Home Configuration. 
 home_cfg = [0;-1.57;0;-1.57;0;0];
+steps = 10; 
 
 % Moving robot to the home configuration.
 if abs((norm(ur5.get_current_joints()) - norm(home_cfg))) <= 1e-3
@@ -76,25 +77,19 @@ q_goal_3 = target_q;
 
 
 % RR Control Loop
-if (c == "RR")
+if (c == "RR-based")
        
     disp("Entering Control Loop for RR Control : Traj A")
     disp("Drawing Line Segment 1");
-    while(ur5RRcontrol(q_start_1, q_goal_1, ur5, 1) ~= 1)
-        disp("Moving")
-    end
+    error1 = ur5RRcontrol(q_start_1, q_goal_1, ur5, 1);
     
     disp("Drawing Line Segement 2");
-    while(ur5RRcontrol(q_start_2, q_goal_2, ur5, 1) ~= 1)
-        disp("Moving")
-    end
+    error2 = ur5RRcontrol(q_start_2, q_goal_2, ur5, 1);
     
     disp("Drawing Line Segement 3");
-    while(ur5RRcontrol(q_start_3, q_goal_3, ur5, 1) ~= 1)
-        disp("Moving")
-    end
-    
+    error3 = ur5RRcontrol(q_start_3, q_goal_3, ur5, 1);
     pause(2)
+
     disp('Moving back to home position')
     ur5.move_joints(home_cfg,5);
     pause(5)
@@ -102,26 +97,19 @@ if (c == "RR")
 
 
 % InvK Control Loop
-elseif (c == "InvK")
+elseif (c == "IK-based")
 
     disp("Entering Control Loop for InvKin Control : Traj A")
     disp("Drawing Line Segment 1");
-
-    while(ur5InvKcontrol(q_start_1, q_goal_1, ur5, steps) ~= 1)
-
-        ur5.get_current_joints()
-
-    end
+    [result1, error1] = ur5InvKcontrol(q_start_1, q_goal_1, ur5, steps);
+    
 
     disp("Drawing Line Segement 2");
-    while(ur5InvKcontrol(q_start_2, q_goal_2, ur5, steps) ~= 1)
-        ur5.get_current_joints()
-    end
+    [result2, error2] = ur5InvKcontrol(q_start_2, q_goal_2, ur5, steps);
+    
 
     disp("Drawing Line Segement 3");
-    while(ur5InvKcontrol(q_start_3, q_goal_3, ur5, steps) ~= 1)
-        ur5.get_current_joints()
-    end
+    [result3, error3] = ur5InvKcontrol(q_start_3, q_goal_3, ur5, steps);
     pause(2)
 
     disp('Moving back to home position')
@@ -131,16 +119,14 @@ elseif (c == "InvK")
 
 
 % JT control Loop. 
-elseif (c == "JT")
+elseif (c == "TJ-based")
     
     disp("Entering Control Loop for JT Control : Traj B")
+
     disp("Drawing Line Segment 1");
-    
-    while(ur5JTcontrol(q_start_1, q_goal_3, ur5, 1) ~= 1)
-        disp("Moving")
-    end
-    
+    error1 = ur5JTcontrol(q_start_1, q_goal_3, ur5, 1);
     pause(2)
+    
     disp('Moving back to home position')
     ur5.move_joints(home_cfg,5);
     pause(5)

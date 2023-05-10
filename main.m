@@ -85,11 +85,25 @@ if INV
     disp("Drawing Line Segment 1");
     [result1, error1] = ur5InvKcontrol(q_start_1, q_goal_1, ur5, steps);
 
+<<<<<<< Updated upstream
+=======
+    while( result1 ~= 1)
+        result1 
+        ur5.get_current_joints()
+
+    end
+
+>>>>>>> Stashed changes
     disp("Drawing Line Segement 2");
     [result2, error2] = ur5InvKcontrol(q_start_2, q_goal_2, ur5, steps);
 
     disp("Drawing Line Segement 3");
+<<<<<<< Updated upstream
     [result3, error3] = ur5InvKcontrol(q_start_3, q_goal_3, ur5, steps);
+=======
+    
+    while( result3 ~= 1)
+>>>>>>> Stashed changes
 
     pause(2)
     disp('Moving back to home position')
